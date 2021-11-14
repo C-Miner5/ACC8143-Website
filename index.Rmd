@@ -5,7 +5,7 @@ links:
   - label: LinkedIn
     url: "https://www.linkedin.com/in/colin-miner-0ab92977/"
   - label: GitHub
-    url: "https://github.com/"
+    url: "https://github.com/C-Miner5/ACC8143-Website"
   - label: Email
     url: "mailto:cjm131@msstate.edu"
 output:
