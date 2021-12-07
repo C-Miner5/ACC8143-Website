@@ -87,33 +87,29 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Colin Miner - ACC8143: R Squared</title>
+  <title>Colin Miner - ACC8143: </title>
 
-  <meta property="description" itemprop="description" content="R Squared as a measure of model fit"/>
 
 
   <!--  https://schema.org/Article -->
   <meta property="article:published" itemprop="datePublished" content="2021-12-06"/>
   <meta property="article:created" itemprop="dateCreated" content="2021-12-06"/>
-  <meta name="article:author" content="Colin Miner"/>
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Colin Miner - ACC8143: R Squared"/>
+  <meta property="og:title" content="Colin Miner - ACC8143: "/>
   <meta property="og:type" content="article"/>
-  <meta property="og:description" content="R Squared as a measure of model fit"/>
   <meta property="og:locale" content="en_US"/>
   <meta property="og:site_name" content="Colin Miner - ACC8143"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Colin Miner - ACC8143: R Squared"/>
-  <meta property="twitter:description" content="R Squared as a measure of model fit"/>
+  <meta property="twitter:title" content="Colin Miner - ACC8143: "/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
   <script type="text/json" id="radix-rmarkdown-metadata">
-  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["R Squared"]},{"type":"character","attributes":{},"value":["R Squared as a measure of model fit\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Colin Miner"]}]}]},{"type":"character","attributes":{},"value":["2021-12-06"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","date","output"]}},"value":[{"type":"character","attributes":{},"value":[""]},{"type":"character","attributes":{},"value":["2021-12-06"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
   </script>
   <!--/radix_placeholder_rmarkdown_metadata-->
   <!--radix_placeholder_navigation_in_header-->
@@ -2374,7 +2370,7 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <!--radix_placeholder_front_matter-->
 
 <script id="distill-front-matter" type="text/json">
-{"title":"R Squared","description":"R Squared as a measure of model fit","authors":[{"author":"Colin Miner","authorURL":"#","affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2021-12-06T00:00:00.000-06:00","citationText":"Miner, 2021"}
+{"title":"","authors":[],"publishedDate":"2021-12-06T00:00:00.000-06:00"}
 </script>
 
 <!--/radix_placeholder_front_matter-->
@@ -2408,81 +2404,92 @@ Projects
 <!--/radix_placeholder_site_before_body-->
 
 <div class="d-title">
-<h1>R Squared</h1>
+<h1>Resume.knit</h1>
 <!--radix_placeholder_categories-->
 <!--/radix_placeholder_categories-->
-<p><p>R Squared as a measure of model fit</p></p>
+
 </div>
 
-<div class="d-byline">
-  Colin Miner  
-  
-<br/>2021-12-06
-</div>
 
 <div class="d-article">
-<p><em>R-squared can be arbitrarily close to 1 when the model is totally wrong.</em></p>
-<p>When a measure indicates that a model is performing poorly, it will prompt the user to investigate the model for problems. This may waste time, but is less of a problem than if the measure gives a false positive and makes it seem like the model is performing well. This can cause a user to continue on with the bad model and create more problems down the road.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
-<span class='co'># our predictor is data from an exponential distribution</span>
-<span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Exponential.html'>rexp</a></span><span class='op'>(</span><span class='fl'>50</span>,rate<span class='op'>=</span><span class='fl'>0.005</span><span class='op'>)</span>
-<span class='co'># non-linear data generation</span>
-<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='op'>(</span><span class='va'>x</span><span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>*</span> <span class='fu'><a href='https://rdrr.io/r/stats/Uniform.html'>runif</a></span><span class='op'>(</span><span class='fl'>50</span>, min<span class='op'>=</span><span class='fl'>0.8</span>, max<span class='op'>=</span><span class='fl'>1.2</span><span class='op'>)</span> 
-
-<span class='co'># clearly non-linear</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>x</span>,<span class='va'>y</span><span class='op'>)</span>             
-</code></pre>
+<p><img src="Images/ResumePhotoCircle.png" width="75" style="display: block; margin: auto;" /></p>
 </div>
-<p><img src="RSquared_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
-</div>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>r.squared</span>
-</code></pre>
-</div>
-<pre><code>[1] 0.8485146</code></pre>
-</div>
-<p>Even adjusted and predictive R^2 are not much better:</p>
-<div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#Adjusted R^2</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>$</span><span class='va'>adj.r.squared</span>
-</code></pre>
-</div>
-<pre><code>[1] 0.8453587</code></pre>
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#PRESS - predicted residual sums of squares</span>
-
-<span class='va'>PRESS</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>linear.model</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='co'>#' calculate the predictive residuals</span>
-  <span class='va'>pr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/residuals.html'>residuals</a></span><span class='op'>(</span><span class='va'>linear.model</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='fl'>1</span><span class='op'>-</span><span class='fu'><a href='https://rdrr.io/r/stats/lm.influence.html'>lm.influence</a></span><span class='op'>(</span><span class='va'>linear.model</span><span class='op'>)</span><span class='op'>$</span><span class='va'>hat</span><span class='op'>)</span>
-  <span class='co'>#' calculate the PRESS</span>
-  <span class='va'>PRESS</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>pr</span><span class='op'>^</span><span class='fl'>2</span><span class='op'>)</span>
-  
-  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>PRESS</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='va'>pred_r_squared</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>linear.model</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='co'>#' Use anova() to get the sum of squares for the linear model</span>
-  <span class='va'>lm.anova</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/anova.html'>anova</a></span><span class='op'>(</span><span class='va'>linear.model</span><span class='op'>)</span>
-  <span class='co'>#' Calculate the total sum of squares</span>
-  <span class='va'>tss</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/sum.html'>sum</a></span><span class='op'>(</span><span class='va'>lm.anova</span><span class='op'>$</span><span class='st'>'Sum Sq'</span><span class='op'>)</span>
-  <span class='co'># Calculate the predictive R^2</span>
-  <span class='va'>pred.r.squared</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>-</span><span class='fu'>PRESS</span><span class='op'>(</span><span class='va'>linear.model</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='va'>tss</span><span class='op'>)</span>
-  
-  <span class='kw'><a href='https://rdrr.io/r/base/function.html'>return</a></span><span class='op'>(</span><span class='va'>pred.r.squared</span><span class='op'>)</span>
-<span class='op'>}</span>
-
-<span class='va'>model</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>y</span> <span class='op'>~</span> <span class='va'>x</span><span class='op'>)</span>  
-<span class='fu'>pred_r_squared</span><span class='op'>(</span><span class='va'>model</span><span class='op'>)</span>
-</code></pre>
-</div>
-<pre><code>[1] 0.7700853</code></pre>
-</div>
-<p>There is no perfect solution, but relying on a single measure for model fit always leaves a chance of something going wrong. Using multiple measures helps, as does simply graphing the data and visually judging the model.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>Colin Miner</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><em>Software Developer</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><a href="mailto:cjm131@msstate.edu" class="email">cjm131@msstate.edu</a></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;"><strong>Skills Summary</strong></th>
+<th style="text-align: center;"><strong>Educational History</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Data warehousing and analytics</td>
+<td style="text-align: center;"><em>University of Southern Mississippi</em></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Software Development</td>
+<td style="text-align: center;">Bachelor of Science, Computer Science</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Process Improvement</td>
+<td style="text-align: center;">Honors College</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Project Management</td>
+<td style="text-align: center;">May 2007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">VB/C#/SQL</td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Crystal Reports</td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+<h1 id="work-experience">Work Experience</h1>
+<h4 id="blossman-gas-inc"><em>Blossman Gas, Inc</em></h4>
+<h4 id="june-2006---present">June 2006 - Present</h4>
+<ul>
+<li>Responsible for all aspects of application development including requirements gathering, design, development,testing, implementation, and maintenance<br />
+</li>
+<li>Train team members in company best practices and programming techniques<br />
+</li>
+<li>Coordinate programming projects with other departments<br />
+</li>
+<li>Regularly deliver financial and productivity reports to company officers<br />
+</li>
+<li>Troubleshoot data and software problems<br />
+</li>
+<li>Automated and maintain the generation, printing, and mailing of company billing documents<br />
+</li>
+<li>Created an SMS texting process to alert customers of upcoming/completed deliveries and handle incoming customer text requests, reducing workload on call center personnel</li>
+<li>Developed multiple interfaces to parse payment and delivery data and post to back office software<br />
+</li>
+<li>Created internal tool suite including customer financing applications, propane hedging management, parts ordering, and interface administration Responsible for analyzing and integrating data from company acquisitions<br />
+</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

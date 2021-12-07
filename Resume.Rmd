@@ -1,0 +1,39 @@
+---
+title: ""
+date: "`r Sys.Date()`"
+output: distill::distill_article
+---
+
+
+```{r, echo=FALSE, fig.align='center'}
+knitr::include_graphics("images/ResumePhotoCircle.png")
+```
+
+| **Colin Miner** |
+|:------:|
+| *Software Developer* |
+| |
+| cjm131@msstate.edu |
+
+| **Skills Summary** | **Educational History** |
+|:-----:|:-----:|
+Data warehousing and analytics  | *University of Southern Mississippi*
+Software Development | Bachelor of Science, Computer Science
+Process Improvement | Honors College
+Project Management | May 2007
+VB/C#/SQL |
+Crystal Reports |
+
+
+# Work Experience
+#### *Blossman Gas, Inc*
+#### June 2006 - Present
+* Responsible for all aspects of application development including requirements gathering, design, development,testing, implementation, and maintenance  
+* Train team members in company best practices and programming techniques  
+* Coordinate programming projects with other departments  
+* Regularly deliver financial and productivity reports to company officers  
+* Troubleshoot data and software problems  
+* Automated and maintain the generation, printing, and mailing of company billing documents  
+* Created an SMS texting process to alert customers of upcoming/completed deliveries and handle incoming customer text requests, reducing workload on call center personnel
+* Developed multiple interfaces to parse payment and delivery data and post to back office software  
+* Created internal tool suite including customer financing applications, propane hedging management, parts ordering, and interface administration Responsible for analyzing and integrating data from company acquisitions  

@@ -1,6 +1,6 @@
 ---
 title: "Colin Miner"
-image: "tobi.jpg"
+description: "Creating organic, GMO-free software since 1985"
 links:
   - label: LinkedIn
     url: "https://www.linkedin.com/in/colin-miner-0ab92977/"
