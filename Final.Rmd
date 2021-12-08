@@ -71,8 +71,7 @@ heart<-heart%>%
 set.seed(1)
 #lets split the data 60/40
 
-
-trainIndex <- createDataPartition(heart$HeartDisease, p = .6, list = FALSE, times = 1)
+trainIndex <- createDataPartition(heart$prediction, p = .6, list = FALSE, times = 1)
 
 #grab the data
 heartTrain <- heart[ trainIndex,]
@@ -80,67 +79,61 @@ heartTest  <- heart[-trainIndex,]
 
 set.seed(1)
 
-heartGBM<- train(
-  form = factor(HeartDisease)~factor(Age)+factor(Sex),
+heartXGB<- train(
+  form = prediction~Age+Sex+ChestPainType+RestingBP+Cholesterol+FastingBS+RestingECG+MaxHR+ExerciseAngina,
   data = heartTrain,
   #here we add classProbs because we want probs
   trControl = trainControl(method = "cv", number = 10,
                            classProbs =  TRUE),
   method = "gbm",
-  tuneLength = 30,
+  tuneLength = 20,
   verbose=FALSE)
 
-tipsGBM_Pred<-predict(tipsGBM,tipsTest,type="prob")
-tipsGBMtestpred<-cbind(tipsGBM_Pred,tipsTest)
+#heartXGB
+knitr::kable(heartXGB$bestTune)
 
-tipsGBMtestpred<-tipsGBMtestpred%>%
-  mutate(prediction=ifelse(Male>=.5,"Male","Female"))
+plot(heartXGB)
 
-confusion_obj<-confusionMatrix(factor(tipsGBMtestpred$prediction),factor(tipsGBMtestpred$sex))
 
-ggplot(as.data.frame(confusion_obj$table))+ 
+#Results
+heartXGB_Pred<-predict(heartXGB,heartTest,type="prob")
+
+knitr::kable(heartXGB_Pred)%>%
+  kableExtra::kable_styling("striped")%>%
+  kableExtra::scroll_box(width = "50%",height="300px")
+
+heartXGBtestpred<-cbind(heartXGB_Pred,heartTest)
+
+heartXGBtestpred<-heartXGBtestpred%>%
+  mutate(pred=if_else(YES>NO,"YES","NO"))
+
+table(heartXGBtestpred$pred)
+
+XgbConfusion<-confusionMatrix(factor(heartXGBtestpred$pred),factor(heartXGBtestpred$prediction))
+
+ggplot(as.data.frame(XgbConfusion$table))+ 
   geom_raster(aes(x=Reference, y=Prediction, fill=Freq)) + 
   geom_text(aes(x=Reference, y=Prediction, label=Freq)) +
-   scale_fill_gradient2( low = "darkred", high = "pink", na.value="black", name = "Freq" )+
+  scale_fill_gradient2( low = "darkred", high = "pink", na.value="black", name = "Freq" )+
   scale_x_discrete(name="Actual Class") + 
   scale_y_discrete(name="Predicted Class")+
   ggtitle("Confusion is fun")+
   theme(plot.title = element_text(hjust=0.5, size=10, face='bold'))
 
+#Feature importance
+summary(heartXGB)
 
-#roc
-rocobj<-pROC::roc( factor(tipsGBMtestpred$sex),tipsGBMtestpred$Male)
-
-rocobj
-plot(rocobj)
-
-
-#sick gains bro
-pred<-ROCR::prediction(tipsGBMtestpred$Male ,factor(tipsGBMtestpred$sex))
-
-gain <- ROCR::performance(pred, "tpr", "rpp")
-
-plot(gain, main = "Gain Chart")
-
-
-#lift
-perf <- ROCR::performance(pred,"lift","rpp")
-
-plot(perf, main="Lift curve") 
-
-V<-caret::varImp(tipsGBM, n.trees=500)$importance%>%
+V<-caret::varImp(heartXGB, n.trees=500)$importance%>%
   arrange(desc(Overall))
 
-knitr::kable(V)
-
 ggplot2::ggplot(V, aes(x=reorder(rownames(V),Overall), y=Overall)) +
-geom_point( color="blue", size=4, alpha=0.6)+
-geom_segment( aes(x=rownames(V), xend=rownames(V), y=0, yend=Overall), 
-color='skyblue') +
-xlab('Variable')+
-ylab('Overall Importance')+
-theme_light() +
-coord_flip() 
+  geom_point( color="blue", size=4, alpha=0.6)+
+  geom_segment( aes(x=rownames(V), xend=rownames(V), y=0, yend=Overall), 
+                color='skyblue') +
+  xlab('Variable')+
+  ylab('Overall Importance')+
+  theme_light() +
+  coord_flip() 
 
 ```
 
