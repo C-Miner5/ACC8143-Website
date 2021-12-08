@@ -1,22 +1,62 @@
 ---
 title: "Machine Learning"
 description: |
-  Support Vector Machine algorithm
+  Random Forests
 author:
   - name: Colin Miner 
 date: "`r Sys.Date()`"
 output: distill::distill_article
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+library(curl)
+
+load(curl("https://raw.githubusercontent.com/Professor-Hunt/ACC8143/main/data/tips.rda"))
+library(caret)
+library(tidyverse)
+library(caret)
+library(dplyr)
+library(gbm)
 ```
 
-Distill is a publication format for scientific and technical writing, native to the web. 
+Imagine you are in a class of 50 students and the teacher is going to ask a question about the homework. If the teacher randomly picks one student there is a chance of picking someone who will give the wrong answer. But if the teacher has everyone answer the question, and then picks the answer with the most votes, there is a higher chance of getting the right answer.
 
-Learn more about using Distill for R Markdown at <https://rstudio.github.io/distill>.
+Random Forests are very similar. They choose an answer that has the most votes out of a group of Decision Trees. A decision tree is a way of trying to predict something based off of data by answering True or False questions. For example if you had a basket of different foods and wanted a way to have a computer tell if any piece of food was an apple. You could first ask "Is it a fruit?" If the answer is no, then it isn't an apple. But if the answer is yes, you could then ask "is it round?", "is it red?", "is it sweet?", etc.
 
+A random forest takes lots of these decision trees and has each of them use different sets of questions about the food to try and figure out which sets of questions are best at getting the right answer. Then it uses the prediction with the most votes. This way if any one decision tree is really wrong in how it predicts, it won't tips the scales too much.
 
+In the accounting world this can be used to try and predict customers who can be immediately approved for a loan, or which loans might need someone to take a closer look at the deal before approving it.
 
+This example uses data about people dining at a restaurant to try and predict if any given diner is male or female, based on how much they tipped, how big the bill was, and how many people were in the group.
 
+```{r rf.1, warning=FALSE, message=FALSE}
+    set.seed(1)
+    #lets split the data 60/40
+     
+    trainIndex <- createDataPartition(tips$sex, p = .6, list = FALSE, times = 1)
 
+    #grab the data
+    tipsTrain <- tips[ trainIndex,]
+    tipsTest  <- tips[-trainIndex,]
+
+    set.seed(1)
+
+    tipsRF<- train(
+      form = factor(sex) ~ total_bill+tip+size,
+      data = tipsTrain,
+      #here we add classProbs because we want probs
+      trControl = trainControl(method = "cv", number = 10,
+                               classProbs =  TRUE),
+      method = "rf",
+      tuneLength = 2)
+
+    tipsRF_Pred<-predict(tipsRF,tipsTest,type="prob")
+    tipsrftestpred<-cbind(tipsRF_Pred,tipsTest)
+    tipsRF
+
+    tipsrftestpred<-tipsrftestpred%>%
+      mutate(prediction=ifelse(Male>=.5,"Male","Female"))
+
+    confusionMatrix(factor(tipsrftestpred$prediction),factor(tipsrftestpred$sex))
+
+```

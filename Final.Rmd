@@ -1,0 +1,147 @@
+---
+title: "Final Project"
+description: |
+  Using gradiant boosting to predict heart problems
+author:
+  - name: Colin Miner 
+date: "`r Sys.Date()`"
+output: distill::distill_article
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+library(curl)
+library(caret)
+library(tidyverse)
+library(caret)
+library(dplyr)
+library(gbm)
+library(psych)
+```
+
+**1. A description of your data and where you found it and what you are
+predicting**
+
+The data concerns patients who are at risk for heart disease, and
+contains multiple attributes that can be risk factors or red flags for
+heart disease. It was developed by combining five other publicly
+available heart datasets and eliminating the duplicates. I will be using
+it to predict if a patient has heart disease.
+
+Source: <https://www.kaggle.com/fedesoriano/heart-failure-prediction>
+
+**2. Descriptive statistics - small discussion...are the skewed or are
+there outliers etc.**
+
+The patient records are highly skewed towards men, and towards patients
+with \<= 120 mg/dl fasting blood sugar. The resting BP has a high
+kurtosis, partly because of one major outlier with no resting BP, and 20
+records (\~2%) exceeding 180 bpm.
+
+The average patient age is 53, which is useful for this prediction as
+young people rarely have detectable heart problems on average.
+
+The cholesterol levels vary pretty widely, and I predict will be an
+important variable.
+
+But overall the dataset is very clean.
+
+```{r stats, warning=FALSE, message=FALSE}
+heart <- read.csv("data/Heart.csv",sep=',')
+psych::describe(heart)
+```
+
+**3. Describe your machine learning model (short description)**
+
+Gradient boosting is very similar to random forests, in that it uses
+many decision trees to develop a better prediction model. It differs in
+how the trees are created and how the results are combined. The decision
+trees are developed iteratively with each new tree helping to fix the
+errors of the previous tree, to form an optimal model.
+
+**4. Split data, run model, and find the results**
+
+```{r gb, warning=FALSE, message=FALSE}
+
+heart<-heart%>%
+  mutate(prediction=if_else(HeartDisease==1,"YES","NO"))
+
+set.seed(1)
+#lets split the data 60/40
+
+
+trainIndex <- createDataPartition(heart$HeartDisease, p = .6, list = FALSE, times = 1)
+
+#grab the data
+heartTrain <- heart[ trainIndex,]
+heartTest  <- heart[-trainIndex,]
+
+set.seed(1)
+
+heartGBM<- train(
+  form = factor(HeartDisease)~factor(Age)+factor(Sex),
+  data = heartTrain,
+  #here we add classProbs because we want probs
+  trControl = trainControl(method = "cv", number = 10,
+                           classProbs =  TRUE),
+  method = "gbm",
+  tuneLength = 30,
+  verbose=FALSE)
+
+tipsGBM_Pred<-predict(tipsGBM,tipsTest,type="prob")
+tipsGBMtestpred<-cbind(tipsGBM_Pred,tipsTest)
+
+tipsGBMtestpred<-tipsGBMtestpred%>%
+  mutate(prediction=ifelse(Male>=.5,"Male","Female"))
+
+confusion_obj<-confusionMatrix(factor(tipsGBMtestpred$prediction),factor(tipsGBMtestpred$sex))
+
+ggplot(as.data.frame(confusion_obj$table))+ 
+  geom_raster(aes(x=Reference, y=Prediction, fill=Freq)) + 
+  geom_text(aes(x=Reference, y=Prediction, label=Freq)) +
+   scale_fill_gradient2( low = "darkred", high = "pink", na.value="black", name = "Freq" )+
+  scale_x_discrete(name="Actual Class") + 
+  scale_y_discrete(name="Predicted Class")+
+  ggtitle("Confusion is fun")+
+  theme(plot.title = element_text(hjust=0.5, size=10, face='bold'))
+
+
+#roc
+rocobj<-pROC::roc( factor(tipsGBMtestpred$sex),tipsGBMtestpred$Male)
+
+rocobj
+plot(rocobj)
+
+
+#sick gains bro
+pred<-ROCR::prediction(tipsGBMtestpred$Male ,factor(tipsGBMtestpred$sex))
+
+gain <- ROCR::performance(pred, "tpr", "rpp")
+
+plot(gain, main = "Gain Chart")
+
+
+#lift
+perf <- ROCR::performance(pred,"lift","rpp")
+
+plot(perf, main="Lift curve") 
+
+V<-caret::varImp(tipsGBM, n.trees=500)$importance%>%
+  arrange(desc(Overall))
+
+knitr::kable(V)
+
+ggplot2::ggplot(V, aes(x=reorder(rownames(V),Overall), y=Overall)) +
+geom_point( color="blue", size=4, alpha=0.6)+
+geom_segment( aes(x=rownames(V), xend=rownames(V), y=0, yend=Overall), 
+color='skyblue') +
+xlab('Variable')+
+ylab('Overall Importance')+
+theme_light() +
+coord_flip() 
+
+```
+
+**5. Describe your results. How can this be useful**
