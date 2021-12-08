@@ -12,7 +12,7 @@ navbar:
       href: Resume.html
     - text: "Projects"
       menu:
-        - text: "Rsquared"
+        - text: "RSquared"
           href: RSquared.html
         - text: "Machine Learning"
           href: ML.html
