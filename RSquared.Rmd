@@ -10,7 +10,7 @@ output: distill::distill_article
 
 *R-squared can be arbitrarily close to 1 when the model is totally wrong.*
 
-When a measure indicates that a model is performing poorly, it will prompt the user to investigate the model for problems.  This may waste time, but is less of a problem than if the measure gives a false positive and makes it seem like the model is performing well.  This can cause a user to continue on with the bad model and create more problems down the road. 
+When a measure indicates that a model is performing poorly, it will prompt the user to investigate the model for problems. This may waste time, but is less of a problem than if the measure gives a false positive and makes it seem like the model is performing well. This can cause a user to continue on with the bad model and create more problems down the road. 
 
 ```{r, echo=TRUE}
 set.seed(1)
@@ -60,4 +60,4 @@ pred_r_squared(model)
 ```
 
 
-There is no perfect solution, but relying on a single measure for model fit always leaves a chance of something going wrong.  Using multiple measures helps, as does simply graphing the data and visually judging the model.
+There is no perfect solution, but relying on a single measure for model fit always leaves a chance of something going wrong. Using multiple measures helps, as does simply graphing the data and visually judging the model.

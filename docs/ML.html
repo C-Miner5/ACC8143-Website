@@ -2394,9 +2394,9 @@ Projects
 <span class="down-arrow">&#x25BE;</span>
 </button>
 <div class="nav-dropdown-content">
-<a href="RSquared.html">Rsquared</a>
+<a href="RSquared.html">RSquared</a>
 <a href="ML.html">Machine Learning</a>
-<a href="final.html">Final Project</a>
+<a href="Final.html">Final Project</a>
 </div>
 </div>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
@@ -2425,15 +2425,15 @@ Projects
 
 </div>
 <p>Imagine you are in a class of 50 students and the teacher is going to ask a question about the homework. If the teacher randomly picks one student there is a chance of picking someone who will give the wrong answer. But if the teacher has everyone answer the question, and then picks the answer with the most votes, there is a higher chance of getting the right answer.</p>
-<p>Random Forests are very similar. They choose an answer that has the most votes out of a group of Decision Trees. A decision tree is a way of trying to predict something based off of data by answering True or False questions. For example if you had a basket of different foods and wanted a way to have a computer tell if any piece of food was an apple. You could first ask “Is it a fruit?” If the answer is no, then it isn’t an apple. But if the answer is yes, you could then ask “is it round?”, “is it red?”, “is it sweet?”, etc. A random forest takes lots of these decision trees, each using different sets of questions about the food, and takes the answer with the most votes. This way if any one decision tree is really wrong in how it predicts, it won’t tips the scales too much.</p>
+<p>Random Forests are very similar. They choose an answer that has the most votes out of a group of Decision Trees. A decision tree is a way of trying to predict something based off of data by answering True or False questions. For example if you had a basket of different foods and wanted a way to have a computer tell if any piece of food was an apple. You could first ask “Is it a fruit?” If the answer is no, then it isn’t an apple. But if the answer is yes, you could then ask “is it round?”, “is it red?”, “is it sweet?”, etc.</p>
+<p>A random forest takes lots of these decision trees and has each of them use different sets of questions about the food to try and figure out which sets of questions are best at getting the right answer. Then it uses the prediction with the most votes. This way if any one decision tree is really wrong in how it predicts, it won’t tips the scales too much.</p>
 <p>In the accounting world this can be used to try and predict customers who can be immediately approved for a loan, or which loans might need someone to take a closer look at the deal before approving it.</p>
-This example uses data about flowers to try and predict if any given flower is male or female.
+<p>This example uses data about people dining at a restaurant to try and predict if any given diner is male or female, based on how much they tipped, how big the bill was, and how many people were in the group.</p>
 <div class="layout-chunk" data-layout="l-body">
 <div class="sourceCode">
 <pre class="sourceCode r"><code class="sourceCode r">    <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
     <span class='co'>#lets split the data 60/40</span>
      
-
     <span class='va'>trainIndex</span> <span class='op'>&lt;-</span> <span class='fu'>createDataPartition</span><span class='op'>(</span><span class='va'>tips</span><span class='op'>$</span><span class='va'>sex</span>, p <span class='op'>=</span> <span class='fl'>.6</span>, list <span class='op'>=</span> <span class='cn'>FALSE</span>, times <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 
     <span class='co'>#grab the data</span>
