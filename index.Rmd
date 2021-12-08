@@ -1,5 +1,6 @@
 ---
 title: "Colin Miner"
+image: "Images/Gondor.png"
 description: "Creating organic, GMO-free software since 1985"
 links:
   - label: LinkedIn
