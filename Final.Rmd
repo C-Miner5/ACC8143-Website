@@ -111,6 +111,8 @@ table(heartXGBtestpred$pred)
 
 XgbConfusion<-confusionMatrix(factor(heartXGBtestpred$pred),factor(heartXGBtestpred$prediction))
 
+XgbConfusion
+
 ggplot(as.data.frame(XgbConfusion$table))+ 
   geom_raster(aes(x=Reference, y=Prediction, fill=Freq)) + 
   geom_text(aes(x=Reference, y=Prediction, label=Freq)) +
@@ -138,3 +140,25 @@ ggplot2::ggplot(V, aes(x=reorder(rownames(V),Overall), y=Overall)) +
 ```
 
 **5. Describe your results. How can this be useful**
+
+The results show some strong associations between most of the data
+elements and heart disease.  The accuracy and kappa levels are high, but
+so high that they indicate a problem with the data or the model.
+
+The false positive and false negative rates are not too high, but in
+this sort of prediction false negatives can be very dangerous. A patient
+who has heart disease and is told they do not will probably not get the
+treatment, or make the lifestyle changes needed to prevent it from
+getting worse.
+
+The presence of an exercise induced angina and the total serum
+cholesterol levels were far and away the most important influencers. 
+Atypical angina chest pain, maximum heart rate were also fairly
+important. Sex (Male) was, though it is possible that the fact that the
+data skewed heavily towards male patients affected its importance level.
+
+This sort of model can be used by doctors to predict patients that are
+likely to be at risk of heart disease, so that treatment can begin early
+before the patient's health gets worse.
+
+\
